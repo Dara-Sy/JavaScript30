@@ -22,6 +22,24 @@
 
   <style>
 
+  /*
+  -- word is the standard to declar a var in CSS
+  data attribute is "data- whateverword" set to an attribute in html 
+  :root is the entire document;
+  */
+
+  :root {
+    --base: #ffc600;
+    --spacing: 10px;
+    --blur: 10px;
+  }
+
+  img {
+    padding: var(--spacing);
+    background: var(--base);
+    filter: blur(var(--blur));
+  }
+
     /*
       misc styles, nothing to do with CSS variables
     */
@@ -45,6 +63,24 @@
   </style>
 
   <script>
+    // querySelectorAll gives you a Node list - has very few methods (ie. forEach)
+    // arrays have so many more methods (ie. pop, push, etc.)
+    const inputs = document.querySelectorAll('.controls input');
+
+    function handleUpdate() {
+      const suffix = this.dataset.sizing || '';
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+      // select sizing attrb or nothing bc not every data has sizing (don't want undefined)
+      // dataset is an obj that contains all data attributes from specific element (ie. sizing from data-sizing)
+      // console.log(this.name); this selects name of CSS var hovered 
+      // console.log(this.value);
+    }
+
+    // listen for a change event in input 
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+
   </script>
 
 </body>
